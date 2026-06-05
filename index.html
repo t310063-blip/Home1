@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人學習歷程總覽 - 清新手帳風</title>
+    <!-- 引入字體：思源宋體、Playfair Display（用於英文點綴） -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <!-- 引入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: oklch(0.98 0.005 85);
+        }
+        .serif-font {
+            font-family: 'Noto Serif TC', serif;
+        }
+        .italic-serif {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        /* 手帳風卡片基本樣式 */
+        .journal-card {
+            background: white;
+            border: 1px solid #e0d5c7;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: all 200ms ease;
+        }
+        /* 漸顯動畫 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 600ms cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24" 
+      x-data="{
+          isScrolled: false,
+          profileData: {
+              name: '陳小明',
+              school: '國立師大附中',
+              grade: '高三己班',
+              motto: '博學之，審問之，慎思之，明辨之，篤行之。在知識的海洋裡，每一次探索都是對未來的投資。'
+          },
+          stats: {
+              courses: 5,
+              awards: 3,
+              serviceHours: 220
+          }
+      }"
+      @scroll.window="isScrolled = window.scrollY > 50">
+
+    <!-- 英雄區塊 -->
+    <div class="relative overflow-hidden" style="min-height: 280px;">
+        <!-- 仿手帳柔和漸層背景 -->
+        <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(32, 54, 85, 0.06) 0%, rgba(217, 193, 161, 0.04) 100%);"></div>
+
+        <div class="relative container mx-auto px-4 pt-10 pb-6 max-w-xl animate-fade-in">
+            <!-- 問候語 -->
+            <div class="mb-5">
+                <p class="text-sm font-medium mb-1 italic-serif text-[#203655]">
+                    Learning Portfolio
+                </p>
+                <h1 class="text-3xl font-bold mb-2 serif-font text-[#203655] leading-tight">
+                    <span x-text="profileData.name"></span>的<br>學習歷程彙總
+                </h1>
+                <p class="text-sm text-stone-500">
+                    <span x-text="profileData.school"></span> · <span x-text="profileData.grade"></span>
+                </p>
+            </div>
+
+            <!-- 快速統計摘要區區塊 -->
+            <div class="grid grid-cols-3 gap-3">
+                <!-- 學習成果 -->
+                <div class="journal-card p-3 text-center border-t-2" style="border-top-color: #203655;">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center mx-auto mb-1.5" style="background: rgba(32, 54, 85, 0.1); color: #203655;">
+                        <!-- Lucide BookOpen Icon 替代 SVG -->
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <p class="text-xl font-bold leading-none serif-font text-[#203655]" x-text="stats.courses"></p>
+                    <p class="text-[11px] mt-1 text-stone-400 font-medium">學習成果</p>
+                </div>
+
+                <!-- 競賽獲獎 -->
+                <div class="journal-card p-3 text-center border-t-2" style="border-top-color: #d9c1a1;">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center mx-auto mb-1.5" style="background: rgba(217, 193, 161, 0.25); color: #cbb290;">
+                        <!-- Lucide Trophy Icon 替代 SVG -->
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9.25a3 3 0 100-6M18 9.25a3 3 0 110-6M12 21a6 6 0 006-6V9a6 6 0 10-12 0v6a6 6 0 006 6zM12 15a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                    </div>
+                    <p class="text-xl font-bold leading-none serif-font text-[#b09673]" x-text="stats.awards"></p>
+                    <p class="text-[11px] mt-1 text-stone-400 font-medium">競賽獲獎</p>
+                </div>
+
+                <!-- 服務時數 -->
+                <div class="journal-card p-3 text-center border-t-2" style="border-top-color: #8b7355;">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center mx-auto mb-1.5" style="background: rgba(139, 115, 85, 0.1); color: #8b7355;">
+                        <!-- Lucide Heart Icon 替代 SVG -->
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </div>
+                    <p class="text-xl font-bold leading-none serif-font text-[#8b7355]" x-text="stats.serviceHours + 'h'"></p>
+                    <p class="text-[11px] mt-1 text-stone-400 font-medium">服務時數</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要內容區塊 -->
+    <div class="container mx-auto px-4 py-2 space-y-6 max-w-xl animate-fade-in" style="animation-delay: 150ms;">
+        
+        <!-- 座右銘區塊 -->
+        <div class="p-4 rounded-xl" style="background: rgba(217, 193, 161, 0.12); border: 1px solid rgba(217, 193, 161, 0.35);">
+            <p class="text-xs italic text-center serif-font text-[#8b7355] leading-relaxed tracking-wide" x-text="'「' + profileData.motto + '」'"></p>
+        </div>
+
+        <!-- 導覽卡片列表 -->
+        <section>
+            <h2 class="text-sm font-bold mb-3 text-[#203655] serif-font flex items-center gap-1">
+                <span>✦</span> 學習歷程總覽
+            </h2>
+            <div class="space-y-3">
+                
+                <!-- 個人簡歷 -->
+                <a href="/profile" class="journal-card p-4 flex items-center gap-3 group block hover:scale-[1.01]">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background: rgba(32, 54, 85, 0.06)">
+                        👤
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-sm font-bold serif-font text-[#203655]">個人簡歷</h3>
+                        <p class="text-xs text-stone-400 mt-0.5 truncate">基本資料、個人介紹與核心能力展示</p>
+                    </div>
+                    <svg class="w-4 h-4 text-[#203655] transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+
+                <!-- 課程學習成果 -->
+                <a href="/courses" class="journal-card p-4 flex items-center gap-3 group block hover:scale-[1.01]">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background: rgba(90, 122, 150, 0.08)">
+                        📖
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-sm font-bold serif-font text-[#203655]">課程學習成果</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full font-bold" style="background: rgba(90, 122, 150, 0.12); color: #5a7a96;" x-text="stats.courses + ' 項'"></span>
+                        </div>
+                        <p class="text-xs text-stone-400 mt-0.5 truncate">自主學習、探究與實作、學科深耕、英文戲劇</p>
+                    </div>
+                    <svg class="w-4 h-4 text-[#5a7a96] transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+
+                <!-- 多元表現 -->
+                <a href="/diverse" class="journal-card p-4 flex items-center gap-3 group block hover:scale-[1.01]">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background: rgba(217, 193, 161, 0.12)">
+                        🌈
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-sm font-bold serif-font text-[#203655]">多元表現</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full font-bold" style="background: rgba(217, 193, 161, 0.2); color: #b09673;" x-text="stats.awards + ' 獎'"></span>
+                        </div>
+                        <p class="text-xs text-stone-400 mt-0.5 truncate">社團經歷、競賽獲獎、服務學習、標準化歷程</p>
+                    </div>
+                    <svg class="w-4 h-4 text-[#d9c1a1] transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- 近期亮點區塊 (修正原文錯字「近期亞點」) -->
+        <section style="animation-delay: 250ms;">
+            <h2 class="text-sm font-bold mb-3 text-[#203655] serif-font flex items-center gap-1">
+                <span>✦</span> 近期亮點
+            </h2>
+            <div class="space-y-2.5">
+                
+                <!-- 亮點 1 -->
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-[#fefdfb] border border-[#e0d5c7]">
+                    <span class="text-lg flex-shrink-0">🌟</span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-stone-800 truncate">全國英文話劇競賽獲得第三名</p>
+                        <p class="text-[11px] text-stone-400 mt-0.5">高二上學期</p>
+                    </div>
+                    <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: #d9c1a1;"></div>
+                </div>
+
+                <!-- 亮點 2 -->
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-[#fefdfb] border border-[#e0d5c7]">
+                    <span class="text-lg flex-shrink-0">📈</span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-stone-800 truncate">AMC 10 美國數學競賽達到 AIME 資格</p>
+                        <p class="text-[11px] text-stone-400 mt-0.5">高二上學期</p>
+                    </div>
+                    <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: #203655;"></div>
+                </div>
+
+                <!-- 亮點 3 -->
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-[#fefdfb] border border-[#e0d5c7]">
+                    <span class="text-lg flex-shrink-0">💚</span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-stone-800 truncate">偏鄉課業輔導累計服務 120 小時</p>
+                        <p class="text-[11px] text-stone-400 mt-0.5">持續進行中</p>
+                    </div>
+                    <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: #5a7a96;"></div>
+                </div>
+
+                <!-- 亮點 4 -->
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-[#fefdfb] border border-[#e0d5c7]">
+                    <span class="text-lg flex-shrink-0">🎭</span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-stone-800 truncate">擔任英文戲劇社社長</p>
+                        <p class="text-[11px] text-stone-400 mt-0.5">高二至高三</p>
+                    </div>
+                    <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: #8b7355;"></div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
